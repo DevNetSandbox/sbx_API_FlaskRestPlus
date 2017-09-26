@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var inc1 = 0;
+        var inc2 = 0;
+        var score1 = '';
+        var score2 = '';
+        $(document).ready(function() {
+            // Use a "/test" namespace.
+            // An application can open a connection on multiple namespaces, and
+            // Socket.IO will multiplex all those connections on a single
+            // physical channel. If you don't care about multiple channels, you
+            // can set the namespace to an empty string.
+            namespace = '/test';
+
+            // Connect to the Socket.IO server.
+            // The connection URL has the following format:
+            //     http[s]://<domain>:<port>[/<namespace>]
+            var socket = io.connect(location.protocol + '//' + document.domain + ':' + 5010 + namespace);
+
+
+
+            // Event handler for server sent data.
+            // The callback function is invoked whenever the server emits data
+            // to the client. The data is then displayed in the "Received"
+            // section of the page.
+            socket.on('my_response', function(msg) {
+                inc1 = msg.player1_score;
+                inc2 = msg.player2_score;
+                console.log(msg);
+                if (inc1 < 10) {
+                    score1 = 'images/green0' + inc1 + '.png';
+                    document.getElementById('myImage1').src=score1;
+                } else {
+                    score1 = 'images/green' + inc1 + '.png';
+                    document.getElementById('myImage1').src=score1;
+                }
+                if (inc2 < 10) {
+                    score2 = 'images/green0' + inc2 + '.png';
+                    document.getElementById('myImage2').src=score2;
+                } else {
+                    score2 = 'images/green' + inc2 + '.png';
+                    document.getElementById('myImage2').src=score1;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <style>
+            body {
+                background-color: black;
+            }
+            
+    </style>
+    <div class="container">
+      <div class="jumbotron">
+        <style>
+            .jumbotron {
+                background-color: black;
+            }
+        </style>
+        <img src="images/DevNetFogBall.png" class="img-responsive" style="width:100%">
+      </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+                <img id="myImage1" class="img-responsive" src="images/green00.png" style="width:100%">
+
+                <button onclick="increment1()">Increment Score</button>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+
+                <img id="myImage2" class="img-responsive" src="images/green00.png" style="width:100%">
+
+                <button onclick="increment2()">Increment Score</button>
+            </div>
+        </div>
+
+        <script>
+            var inc1 = 0;
+            var inc2 = 0;
+            var score = '';
+            function increment1() {
+                inc1 += 1;
+                if (inc1 < 10) {
+                    score = 'images/green0' + inc1 + '.png';
+                    document.getElementById('myImage1').src=score;
+                } else {
+                    score = 'images/green' + inc1 + '.png';
+                    document.getElementById('myImage1').src=score;
+                }
+
+            };
+            function increment2() {
+                inc2 += 1;
+                if (inc2 < 10) {
+                    score = 'images/green0' + inc2 + '.png';
+                    document.getElementById('myImage2').src=score;
+                } else {
+                    score = 'images/green' + inc2 + '.png';
+                    document.getElementById('myImage2').src=score;
+                }
+
+            };
+        </script>
+    </div>
+</body>
+</html>
