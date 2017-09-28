@@ -25,7 +25,7 @@ class CategoryCollection(Resource):
     @api.expect()
     def get(self):
         """
-        Returns the Catalog.
+        # Returns the Catalog.
         ```
         Use URL params for filtering
         name = filter by Lab Name (instead of topology ID)
@@ -34,8 +34,12 @@ class CategoryCollection(Resource):
         type = filter by Reservation or Always-On
         ```
         """
-
-        return None, 200
+        json = """
+        {
+        "stuff" : "this is json stuff"
+        }
+        """
+        return json, 200
 
     @api.response(201, 'Topology successfully created.')
     @api.expect()
